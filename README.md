@@ -6,20 +6,6 @@ Dette prosjektet implementerer et enkelt API for produktstyring med en MySQL-dat
 
 ## 📌 Arkitektur og Konfigurasjon
 
-Struktur
-oppgave_1/
-├── docker-compose.yml
-├── api/
-│    ├── app.py
-│    ├── Dockerfile
-│    ├── requirements.txt
-├── db/
-│    ├── database_setup.sql
-│    ├── Dockerfile
-├── nginx/
-│    ├── Dockerfile
-│    ├── nginx.conf
-
 Løsningen består av tre hovedtjenester som kjører i separate Docker-containere:
 
 ### 1️⃣ Flask API (web)
