@@ -1,0 +1,46 @@
+version: '3'
+services:
+  web:
+    build: ./api
+    container_name: eksamen_api
+    environment:
+      - DATABASE_URL=mysql://product-api:securepass@db:3306/product_db
+    depends_on:
+      - db
+    networks:
+      - eksamen_net
+    expose:
+      - "5000"
+
+  db:
+    build: ./db
+    container_name: eksamen_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=securepass
+      - MYSQL_DATABASE=product_db
+      - MYSQL_USER=product-api
+      - MYSQL_PASSWORD=securepass
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/database_setup.sql:/docker-entrypoint-initdb.d/database_setup.sql
+    networks:
+      - eksamen_net
+    expose:
+      - "3306"
+
+  nginx:
+    build: ./nginx
+    container_name: eksamen_nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    networks:
+      - eksamen_net
+
+volumes:
+  mysql_data:
+
+networks:
+  eksamen_net:
+    driver: bridge
